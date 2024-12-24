@@ -28,6 +28,22 @@ function HomePage()
             console.log("error");
         }
     }
+    const handleDelete = async (id) => {
+      try {
+        const response = await fetch(`http://localhost:5000/base/deleteById/${id}`, {
+          method:'delete'
+        });
+        if (response.ok) {
+          console.log("Deleted Successfully");
+          await getalldata(); // Refetch the updated data
+        } else {
+          console.error("Failed to delete item");
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     useEffect(()=>{
       console.log("UseEffect called")
       getalldata();
@@ -51,6 +67,7 @@ function HomePage()
                     <th className="border-b-2 py-3 px-4 text-gray-600">Employee</th>
                     <th className="border-b-2 py-3 px-4 text-gray-600">Title</th>
                     <th className="border-b-2 py-3 px-4 text-gray-600">Role</th>
+                    <th className="border-b-2 py-3 px-4 text-gray-600">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -69,6 +86,10 @@ function HomePage()
                       </td>
                       <td className="border-b py-4 px-4">{person.title}</td>
                       <td className="border-b py-4 px-4">{person.role}</td>
+                      <td className="border-b py-4 px-4 flex flex-row ">
+                        <button className="bg-green-600 flex justify-center items-center h-12 w-24 mx-2">Edit</button>
+                        <button  onClick={() => handleDelete(person._id)} className="bg-red-600 flex justify-center items-center h-12 w-24 mx-2">Delete</button>
+                        </td>
                     </tr>
                   ))}
                 </tbody>

@@ -13,6 +13,7 @@ function EmployeeForm(){
     })
     const navigate = useNavigate();
     const handleSubmit = async (e)=>{
+      e.preventDefault();
         try{
             console.log(formdata)
             const response = await fetch(`http://localhost:5000/base/create`, ({
@@ -23,7 +24,7 @@ function EmployeeForm(){
             }))
             console.log(formdata)
             console.log("form submitted,",response)
-            // navigate('/');
+            navigate('/');
         }
         catch(err){
             console.log(err.message);
